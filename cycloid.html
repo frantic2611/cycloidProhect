@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="2000" height="700"> </canvas>
+    <h1> Циклоида </h1>
+    <label> Укажи радиус окружности от 1 до 5</label>
+    <br> 
+    <input type="text" id="x1" placeholder="x1">
+    <br>
+    <br>
+    <button onclick="shit()"> CALCULATE</button>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var position = 30;
+        var posY = 690;
+        var coordinats = new Array();
+        
+        var circle = function(x, y, radius)
+        {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+            ctx.stroke();
+    
+        }
+            
+        function drawXAxis(ctx, canvasWidth, canvasHeight) {
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight-10 );
+            ctx.lineTo(canvasWidth, canvasHeight-10);
+            ctx.stroke();
+        }
+        function drawYAxis(ctx, canvasWidth, canvasHeight) {
+            ctx.beginPath();
+            ctx.moveTo(canvasWidth, 0);
+            ctx.lineTo(canvasWidth, canvasHeight);
+            ctx.stroke();
+        }
+
+        function shit()
+        {
+            var radius = parseFloat(document.getElementById("x1").value);
+            if(radius > 5) radius = 5;
+            if(radius < 1) radius = 1;
+            console.log(radius);
+
+            radius = radius * 50
+            posY = posY-radius;
+            
+            setInterval(function()
+        {
+            ctx.clearRect(0,0,2000,700);
+            
+            ctx.lineWidth = 3;
+            drawXAxis(ctx, 2000, 700);
+            ctx.lineWidth = 4;
+            drawYAxis(ctx, 5, 700);
+            ctx.lineWidth = 1;
+            drawXAxis(ctx, 2000, 600);
+            drawXAxis(ctx, 2000, 500);
+            drawXAxis(ctx, 2000, 400);
+            drawXAxis(ctx, 2000, 300);
+            drawXAxis(ctx, 2000, 200);
+            drawXAxis(ctx, 2000, 100);
+            ctx.font = 'bold 20px sans-serif';
+            var radius1 = 30;
+            ctx.fillText(radius1, 5, 600);
+            ctx.fillText(2*radius1, 5, 500);
+            ctx.fillText(3*radius1, 5, 400);
+            ctx.fillText(4*radius1, 5, 300);
+            ctx.fillText(5*radius1, 5, 200);
+            ctx.fillText(6*radius1, 5, 100);
+            ctx.fillText(0, 9, 690);
+            ctx.lineWidth = 1;
+            for(let i = 0; i < 20; i++)
+            {
+                drawYAxis(ctx, 2000 - i*100, 700);
+                ctx.font = 'bold 20px sans-serif';
+                ctx.fillText(i*10, 0+i*100, 700);
+            }
+            
+            
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "Blue";
+            circle(position, posY, radius);
+
+            
+            ctx.beginPath();
+            ctx.arc((position - radius*Math.sin(position/radius)), (posY+radius*Math.cos(position/radius)), 3, 0, Math.PI * 2, false);
+            ctx.stroke();
+
+            
+            ctx.beginPath();
+            ctx.moveTo(position, posY)
+            ctx.lineTo((position - radius*Math.sin(position/radius)), (posY+radius*Math.cos(position/radius)))
+            ctx.stroke();
+
+            coordinats.push((position - radius*Math.sin(position/radius)))
+            coordinats.push((posY+radius*Math.cos(position/radius)))
+
+
+            for(let i = 0; i < coordinats.length; i+= 2)
+            {
+                ctx.strokeStyle = "Red"
+                circle(coordinats[i], coordinats[i+1], 2)
+                ctx.strokeStyle = "Black"
+            }
+            position++;
+            if(position > 2060) 
+            { 
+                position = 30;
+                coordinats = Array();
+            }
+        }, 5)
+
+        }
+
+        
+    </script>
+</body>
+</html>
