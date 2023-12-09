@@ -9,13 +9,19 @@
 <body>
     
     <h1> Циклоида </h1>
-    <label> Укажи радиус окружности от 1 до 5</label>
-    <br> 
-    <input type="range" id="x1" placeholder="x1" min="1", max = "5", value = "1">
-    <br>
-    <br>
+    <label> Укажи радиус окружности от 1 до 5         </label>
     
+    <input type="range" id="x1" placeholder="x1" min="1", max = "5", value = "1">
+    <table></table>
+    <label> Скорость (я скорость) </label>
+    
+    <input type="range" id="x2" placeholder="x2" min="1", max = "5", value = "1">
+    <td>
+    <br>
+   
     <button onclick="shit()"> CALCULATE</button>
+    <br>
+    <br>
     <br>
     <canvas id="canvas" width="2000" height="700"> </canvas>
     <script>
@@ -59,7 +65,7 @@
             posY = 690;
             coordinats = Array();
             radius = parseFloat(document.getElementById("x1").value);
-
+            koffecent = parseFloat(document.getElementById("x2").value);
             radius = radius * 50;
     
             posY = posY-radius;
@@ -80,7 +86,10 @@
                     drawXAxis(ctx, 2000, 300);
                     drawXAxis(ctx, 2000, 200);
                     drawXAxis(ctx, 2000, 100);
+                    var c = '03C0';
                     ctx.font = 'bold 20px sans-serif';
+                    ctx.fillText("Текущий радиус окружности - " + radius/50, 15, 30);
+                    ctx.fillText("Период - " + 2*radius/50 + String.fromCharCode(parseInt(c, 16)), 15, 60);
                     var radius1 = 30;
                     ctx.fillText(2, 5, 600);
                     ctx.fillText(4, 5, 500);
@@ -95,7 +104,8 @@
                     {
                         drawYAxis(ctx, i*50*3.14, 700);
                         ctx.font = 'bold 20px sans-serif';
-                        if(i % 3 == 0) ctx.fillText((i/3)*2 + "pi", 0+i*100, 700);
+                        
+                        if(i % 3 == 0) ctx.fillText((i/3)*2 + String.fromCharCode(parseInt(c, 16)), 0+i*100, 685);
                     }
                     
                     
@@ -115,8 +125,12 @@
                     ctx.lineTo((position - radius*Math.sin(position/radius)), (posY+radius*Math.cos(position/radius)))
                     ctx.stroke();
 
-                    coordinats.push((position - radius*Math.sin(position/radius)))
-                    coordinats.push((posY+radius*Math.cos(position/radius)))
+                    for(let i = 0; i < koffecent; i++ )
+                    {
+                        coordinats.push((position + i - radius*Math.sin((position+i)/radius)))
+                        coordinats.push((posY+radius*Math.cos((position+i)/radius)))
+                    }
+                    
 
 
                     for(let i = 0; i < coordinats.length; i+= 2)
@@ -126,13 +140,13 @@
                         
                     }
                     ctx.fillStyle = "Black";
-                    position++;
+                    position+= koffecent;
                     if(position > 2000) 
                     { 
                         position = 30;
                         coordinats = Array();
                     }
-                    }, speed)
+                    }, 1)
             }
             p=1;
         }
