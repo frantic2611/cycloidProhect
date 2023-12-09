@@ -23,7 +23,7 @@
     <br>
     <br>
     <br>
-    <canvas id="canvas" width="2000" height="700"> </canvas>
+    <canvas id="canvas" width="1600" height="700"> </canvas>
     <script>
         
         var canvas = document.getElementById("canvas");
@@ -73,19 +73,19 @@
             {
                 setInterval(function()
                 {
-                    ctx.clearRect(0,0,2000,700);
+                    ctx.clearRect(0,0,1600,700);
                     
                     ctx.lineWidth = 3;
-                    drawXAxis(ctx, 2000, 700);
+                    drawXAxis(ctx, 1600, 700);
                     ctx.lineWidth = 4;
                     drawYAxis(ctx, 5, 700);
                     ctx.lineWidth = 1;
-                    drawXAxis(ctx, 2000, 600);
-                    drawXAxis(ctx, 2000, 500);
-                    drawXAxis(ctx, 2000, 400);
-                    drawXAxis(ctx, 2000, 300);
-                    drawXAxis(ctx, 2000, 200);
-                    drawXAxis(ctx, 2000, 100);
+                    drawXAxis(ctx, 1600, 600);
+                    drawXAxis(ctx, 1600, 500);
+                    drawXAxis(ctx, 1600, 400);
+                    drawXAxis(ctx, 1600, 300);
+                    drawXAxis(ctx, 1600, 200);
+                    drawXAxis(ctx, 1600, 100);
                     var c = '03C0';
                     ctx.font = 'bold 20px sans-serif';
                     ctx.fillText("Текущий радиус окружности - " + radius/50, 15, 30);
@@ -141,7 +141,7 @@
                     }
                     ctx.fillStyle = "Black";
                     position+= koffecent;
-                    if(position > 2000) 
+                    if(position > 1600) 
                     { 
                         position = 30;
                         coordinats = Array();
